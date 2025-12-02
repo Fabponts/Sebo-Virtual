@@ -25,6 +25,7 @@ CREATE TABLE ad (
     book_condition VARCHAR(20) NOT NULL,
     publisher VARCHAR(30) NOT NULL,
     ad_date DATE NOT NULL,
+    ad_status VARCHAR(20) NOT NULL
 
     FOREIGN KEY (book_id) REFERENCES books(id),
     FOREIGN KEY (user_id) REFERENCES users(id)
