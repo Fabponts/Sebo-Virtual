@@ -25,7 +25,26 @@ public class BookService {
         book.setGenre(bookDTO.getGenre());
         return bookRepository.save(book);
     }
+    public Book updateBook(Long book_id, BookDTO bookDTO){
+        if(bookRepository.existsById(book_id)){
+            Book book= bookRepository.findById(book_id).get();
+            book.setTitle(bookDTO.getTitle());
+            book.setAuthor(bookDTO.getAuthor());
+            book.setPublisher(bookDTO.getPublisher());
+            book.setSinopse(bookDTO.getDescription());
+            book.setGenre(bookDTO.getGenre());
+            return bookRepository.save(book);
+        }else {
+            throw new RuntimeException("Book Id not found: " + book_id);
+        }
+    }
+    public Optional<Book> getBookById(Long id){
+        return bookRepository.findById(id);
+    }
 
+    public List<Book> getAllBooks(){
+        return  bookRepository.findAll();
+    }
     public void deleteBook(Book book) {
         if (bookRepository.existsById(book.getId())) {
             bookRepository.deleteById(book.getId());
@@ -33,13 +52,5 @@ public class BookService {
         else{
             throw new RuntimeException("Book Id not found: " + book.getId());
         }
-    }
-
-    public Optional<Book> getBookById(Long id){
-        return bookRepository.findById(id);
-    }
-
-    public List<Book> getAllBooks(){
-        return  bookRepository.findAll();
     }
 }
