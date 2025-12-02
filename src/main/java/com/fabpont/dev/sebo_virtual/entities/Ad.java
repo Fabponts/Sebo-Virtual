@@ -1,9 +1,9 @@
 package com.fabpont.dev.sebo_virtual.entities;
 
+import com.fabpont.dev.sebo_virtual.Enum.AdStatus;
+import com.fabpont.dev.sebo_virtual.Enum.BookConditionStatus;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "ad")
 @Getter
 @Setter
 public class Ad {
@@ -29,19 +30,20 @@ public class Ad {
     @NotNull
     private BigDecimal price;
 
-    @NotBlank
-    @Size(max = 20)
-    private String bookCondition;
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private BookConditionStatus bookCondition;
 
     @NotNull
     private LocalDate adDate;
 
+    @Enumerated(EnumType.STRING)
     @NotNull
-    private String adStatus;
+    private AdStatus adStatus;
 
     public Ad() {
     }
-    public Ad(Book book, User user, BigDecimal price, String bookCondition, LocalDate adDate,  String adStatus) {
+    public Ad(Book book, User user, BigDecimal price, BookConditionStatus bookCondition, LocalDate adDate,  AdStatus adStatus) {
         this.bookCondition = bookCondition;
         this.adDate = adDate;
         this.price = price;
