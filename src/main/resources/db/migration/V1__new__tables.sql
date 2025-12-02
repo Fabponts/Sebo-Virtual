@@ -13,7 +13,8 @@ CREATE TABLE books (
     author VARCHAR(50) NOT NULL,
     sinopse VARCHAR(500) NOT NULL,
     genre VARCHAR(20) NOT NULL,
-    release_year DATE NOT NULL
+    release_year DATE NOT NULL,
+    publisher VARCHAR(30) NOT NULL
 );
 
 CREATE TABLE ad (
@@ -22,6 +23,7 @@ CREATE TABLE ad (
     user_id BIGINT NOT NULL,
     price DECIMAL(10,2) NOT NULL,
     book_condition VARCHAR(20) NOT NULL,
+    publisher VARCHAR(30) NOT NULL,
     ad_date DATE NOT NULL,
 
     FOREIGN KEY (book_id) REFERENCES books(id),
