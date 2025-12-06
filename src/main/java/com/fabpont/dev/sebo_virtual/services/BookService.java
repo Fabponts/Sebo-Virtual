@@ -16,15 +16,26 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public Book addBook(BookDTO bookDTO) {
+    public BookDTO addBook(BookDTO bookDTO) {
         Book book = new Book();
         book.setTitle(bookDTO.getTitle());
         book.setAuthor(bookDTO.getAuthor());
         book.setPublisher(bookDTO.getPublisher());
         book.setSinopse(bookDTO.getDescription());
         book.setGenre(bookDTO.getGenre());
-        return bookRepository.save(book);
+
+        Book saved = bookRepository.save(book);
+
+        BookDTO response = new BookDTO();
+        response.setTitle(saved.getTitle());
+        response.setAuthor(saved.getAuthor());
+        response.setPublisher(saved.getPublisher());
+        response.setDescription(saved.getSinopse());
+        response.setGenre(saved.getGenre());
+
+        return response;
     }
+
     public Book updateBook(Long book_id, BookDTO bookDTO){
         if(bookRepository.existsById(book_id)){
             Book book= bookRepository.findById(book_id).get();
@@ -45,12 +56,13 @@ public class BookService {
     public List<Book> getAllBooks(){
         return  bookRepository.findAll();
     }
-    public void deleteBook(Book book) {
-        if (bookRepository.existsById(book.getId())) {
-            bookRepository.deleteById(book.getId());
+
+    public void deleteBook(Long book_id) {
+        if (bookRepository.existsById(book_id)) {
+            bookRepository.deleteById(book_id);
         }
         else{
-            throw new RuntimeException("Book Id not found: " + book.getId());
+            throw new RuntimeException("Book Id not found: " + book_id);
         }
     }
 }

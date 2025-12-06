@@ -3,6 +3,8 @@ package com.fabpont.dev.sebo_virtual.DTO;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 public class BookDTO {
@@ -11,5 +13,4 @@ public class BookDTO {
     private String publisher;
     private String description;
     private String genre;
-    private String releaseDate;
 }

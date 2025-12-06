@@ -24,9 +24,6 @@ public class Book {
     @Column(length = 20, nullable = false)
     private String genre;
 
-    @Column(nullable = false)
-    private LocalDate releaseDate;
-
     @Column(length = 30, nullable = false)
     private String publisher;
 
@@ -36,11 +33,10 @@ public class Book {
     public Book(){
     }
 
-    public Book(String title, String author, String genre, LocalDate releaseDate, String publisher, String sinopse) {
+    public Book(String title, String author, String genre, String publisher, String sinopse) {
         this.title = title;
         this.author = author;
         this.genre = genre;
-        this.releaseDate = releaseDate;
         this.publisher = publisher;
         this.sinopse = sinopse;
     }

@@ -1,6 +1,6 @@
 package com.fabpont.dev.sebo_virtual.services;
 
-import com.fabpont.dev.sebo_virtual.DTO.UserDTO;
+import com.fabpont.dev.sebo_virtual.DTO.UserRegisterDTO;
 import com.fabpont.dev.sebo_virtual.entities.User;
 import com.fabpont.dev.sebo_virtual.repositories.UserRepository;
 import org.springframework.stereotype.Service;
@@ -16,13 +16,13 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User saveUser(UserDTO userDTO) {
+    public User saveUser(UserRegisterDTO userRegisterDTO) {
         User user = new User();
-        user.setName(userDTO.getName());
-        user.setEmail(userDTO.getEmail());
-        user.setPassword(userDTO.getPassword());
-        user.setPhoneNumber(userDTO.getPhoneNumber());
-        user.setAddress(userDTO.getAddress());
+        user.setName(userRegisterDTO.getName());
+        user.setEmail(userRegisterDTO.getEmail());
+        user.setPassword(userRegisterDTO.getPassword());
+        user.setPhoneNumber(userRegisterDTO.getPhoneNumber());
+        user.setAddress(userRegisterDTO.getAddress());
         return userRepository.save(user);
     }
 
@@ -46,14 +46,14 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User updateUser(Long user_id, UserDTO userDTO) {
+    public User updateUser(Long user_id, UserRegisterDTO userRegisterDTO) {
         if (userRepository.existsById(user_id)) {
             User user = findUserById(user_id).get();
-            user.setName(userDTO.getName());
-            user.setEmail(userDTO.getEmail());
-            user.setPassword(userDTO.getPassword());
-            user.setPhoneNumber(userDTO.getPhoneNumber());
-            user.setAddress(userDTO.getAddress());
+            user.setName(userRegisterDTO.getName());
+            user.setEmail(userRegisterDTO.getEmail());
+            user.setPassword(userRegisterDTO.getPassword());
+            user.setPhoneNumber(userRegisterDTO.getPhoneNumber());
+            user.setAddress(userRegisterDTO.getAddress());
             return userRepository.save(user);
         }else {
             throw new RuntimeException("Id user not found: " + user_id);

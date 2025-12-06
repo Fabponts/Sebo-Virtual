@@ -13,7 +13,7 @@ import java.time.LocalDate;
 public class AdResponseDTO {
     private Long id;
     private BookDTO book;
-    private UserDTO user;
+    private UserRegisterDTO user;
     private BigDecimal price;
     private BookConditionStatus bookCondition;
     private LocalDate adDate;
