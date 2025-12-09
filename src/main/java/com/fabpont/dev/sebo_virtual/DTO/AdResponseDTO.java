@@ -2,20 +2,35 @@ package com.fabpont.dev.sebo_virtual.DTO;
 
 import com.fabpont.dev.sebo_virtual.Enum.AdStatus;
 import com.fabpont.dev.sebo_virtual.Enum.BookConditionStatus;
-import lombok.Getter;
-import lombok.Setter;
+import com.fabpont.dev.sebo_virtual.entities.Ad;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-@Getter
-@Setter
-public class AdResponseDTO {
-    private Long id;
-    private BookDTO book;
-    private UserRegisterDTO user;
-    private BigDecimal price;
-    private BookConditionStatus bookCondition;
-    private LocalDate adDate;
-    private AdStatus adStatus;
+public record AdResponseDTO(
+            Long id,
+            Long userId,
+            String userName,
+            Long bookId,
+            String bookTitle,
+            BigDecimal price,
+            BookConditionStatus bookCondition,
+            AdStatus status,
+            LocalDateTime createdAt
+    ) {
+        // Esse é o "fromEntity" que estava faltando
+        public static AdResponseDTO fromEntity(Ad ad) {
+            return new AdResponseDTO(
+                    ad.getId(),
+                    ad.getUser().getId(),
+                    ad.getUser().getName(),
+                    ad.getBook().getId(),
+                    ad.getBook().getTitle(),
+                    ad.getPrice(),
+                    ad.getBookCondition(),
+                    ad.getAdStatus(),
+                    ad.getAdDate()
+            );
+        }
+    }
 }

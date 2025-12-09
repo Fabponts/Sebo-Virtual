@@ -9,8 +9,8 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 public class AdCreateDTO {
-    private Long book_id;
-    private Long user_id;
+    private Long bookId;
+    private Long useId;
     private BigDecimal price;
     private BookConditionStatus bookCondition;
 }

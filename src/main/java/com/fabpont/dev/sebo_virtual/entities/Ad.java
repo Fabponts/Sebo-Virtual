@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "ad")
@@ -35,7 +36,7 @@ public class Ad {
     private BookConditionStatus bookCondition;
 
     @NotNull
-    private LocalDate adDate;
+    private LocalDateTime adDate;
 
     @Enumerated(EnumType.STRING)
     @NotNull
@@ -43,7 +44,7 @@ public class Ad {
 
     public Ad() {
     }
-    public Ad(Book book, User user, BigDecimal price, BookConditionStatus bookCondition, LocalDate adDate,  AdStatus adStatus) {
+    public Ad(Book book, User user, BigDecimal price, BookConditionStatus bookCondition, LocalDateTime adDate,  AdStatus adStatus) {
         this.bookCondition = bookCondition;
         this.adDate = adDate;
         this.price = price;
