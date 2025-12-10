@@ -1,6 +1,6 @@
 package com.fabpont.dev.sebo_virtual.controllers;
 
-import com.fabpont.dev.sebo_virtual.DTO.BookDTO;
+import com.fabpont.dev.sebo_virtual.DTO.BookCreateDTO;
 import com.fabpont.dev.sebo_virtual.entities.Book;
 import com.fabpont.dev.sebo_virtual.services.BookService;
 import jakarta.validation.Valid;
@@ -19,8 +19,8 @@ public class BookController {
         this.bookService = bookService;
     }
     @PostMapping
-    public BookDTO createBook(@Valid @RequestBody BookDTO bookDTO){
-        return bookService.addBook(bookDTO);
+    public BookCreateDTO createBook(@Valid @RequestBody BookCreateDTO bookCreateDTO){
+        return bookService.addBook(bookCreateDTO);
     }
 
     @DeleteMapping("/books/{id}")

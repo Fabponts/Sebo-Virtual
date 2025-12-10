@@ -18,7 +18,6 @@ public record AdResponseDTO(
             AdStatus status,
             LocalDateTime createdAt
     ) {
-        // Esse é o "fromEntity" que estava faltando
         public static AdResponseDTO fromEntity(Ad ad) {
             return new AdResponseDTO(
                     ad.getId(),
@@ -33,4 +32,3 @@ public record AdResponseDTO(
             );
         }
     }
-}

@@ -26,7 +26,7 @@ public class AdService {
     private final BookRepository bookRepository;
 
     @Transactional
-    public AdResponseDTO createAd(AdCreateDTO adcreateDTO) throws ResourceNotFoundException {
+    public AdCreateDTO createAd(AdCreateDTO adcreateDTO) throws ResourceNotFoundException {
         User user = userRepository.findById(adcreateDTO.getUseId())
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Usuário não encontrado com o ID: " + adcreateDTO.getUseId()));
@@ -45,7 +45,7 @@ public class AdService {
 
         Ad savedAd = adRepository.save(ad);
 
-       return AdResponseDTO.fromEntity(adRepository.save(ad)); //Retorna AdResponseDTO, não AdCreateDTO
+        return AdResponseDTO.fromEntity(adRepository.save(ad)); //Retorna AdResponseDTO, não AdCreateDTO
 
 
     }
@@ -56,8 +56,8 @@ public class AdService {
         adRepository.deleteById(adId);
     }
 
-    public Optional<Ad> findById(Long adId) {
-        return adRepository.findById(adId);
+    public Optional<Ad> findById(Long id) {
+        return adRepository.findById(id);
     }
 
 
