@@ -1,6 +1,7 @@
 package com.fabpont.dev.sebo_virtual.services;
 
-import com.fabpont.dev.sebo_virtual.DTO.BookCreateDTO;
+import com.fabpont.dev.sebo_virtual.DTO.request.BookRequestDTO;
+import com.fabpont.dev.sebo_virtual.DTO.response.BookResponseDTO;
 import com.fabpont.dev.sebo_virtual.entities.Book;
 import com.fabpont.dev.sebo_virtual.exceptions.ResourceNotFoundException;
 import com.fabpont.dev.sebo_virtual.repositories.BookRepository;
@@ -16,39 +17,32 @@ import java.util.Optional;
 public class BookService {
     private final BookRepository bookRepository;
 
-    public BookCreateDTO addBook(BookCreateDTO bookCreateDTO) {
+    public BookResponseDTO addBook(BookRequestDTO bookRequestDTO) {
         Book book = new Book();
-        book.setTitle(bookCreateDTO.getTitle());
-        book.setAuthor(bookCreateDTO.getAuthor());
-        book.setPublisher(bookCreateDTO.getPublisher());
-        book.setSinopse(bookCreateDTO.getDescription());
-        book.setGenre(bookCreateDTO.getGenre());
+        book.setTitle(bookRequestDTO.getTitle());
+        book.setAuthor(bookRequestDTO.getAuthor());
+        book.setPublisher(bookRequestDTO.getPublisher());
+        book.setSinopse(bookRequestDTO.getDescription());
+        book.setGenre(bookRequestDTO.getGenre());
 
         Book saved = bookRepository.save(book);
-
-        BookCreateDTO response = new BookCreateDTO();
-        response.setTitle(saved.getTitle());
-        response.setAuthor(saved.getAuthor());
-        response.setPublisher(saved.getPublisher());
-        response.setDescription(saved.getSinopse());
-        response.setGenre(saved.getGenre());
-
-        return response;
+        return BookResponseDTO.from(saved);
     }
+
     @Transactional
-    public Book updateBook(Long bookId, BookCreateDTO bookCreateDTO) throws ResourceNotFoundException {
+    public BookResponseDTO updateBook(Long bookId, BookRequestDTO bookRequestDTO) throws ResourceNotFoundException {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new ResourceNotFoundException("Book id not found: " + bookId));
+        book.setTitle(bookRequestDTO.getTitle());
+        book.setAuthor(bookRequestDTO.getAuthor());
+        book.setPublisher(bookRequestDTO.getPublisher());
+        book.setSinopse(bookRequestDTO.getDescription());
+        book.setGenre(bookRequestDTO.getGenre());
 
-        book.setTitle(bookCreateDTO.getTitle());
-        book.setAuthor(bookCreateDTO.getAuthor());
-        book.setPublisher(bookCreateDTO.getPublisher());
-        book.setSinopse(bookCreateDTO.getDescription());
-        book.setGenre(bookCreateDTO.getGenre());
-
-        return bookRepository.save(book);
-
+        Book updatedBook = bookRepository.save(book);
+        return BookResponseDTO.from(updatedBook);
     }
+
     public Optional<Book> getBookById(Long id){
         return bookRepository.findById(id);
     }
@@ -57,12 +51,9 @@ public class BookService {
         return  bookRepository.findAll();
     }
 
-    public void deleteBook(Long book_id) {
-        if (bookRepository.existsById(book_id)) {
-            bookRepository.deleteById(book_id);
-        }
-        else{
-            throw new RuntimeException("Book Id not found: " + book_id);
-        }
+    public void deleteBook(Long bookId) throws ResourceNotFoundException {
+       Book book = bookRepository.findById(bookId)
+               .orElseThrow(() -> new ResourceNotFoundException("Book id not found: " + bookId));
+       bookRepository.delete(book);
     }
 }

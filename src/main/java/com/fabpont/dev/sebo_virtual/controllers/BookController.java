@@ -1,7 +1,9 @@
 package com.fabpont.dev.sebo_virtual.controllers;
 
-import com.fabpont.dev.sebo_virtual.DTO.BookCreateDTO;
+import com.fabpont.dev.sebo_virtual.DTO.request.BookRequestDTO;
+import com.fabpont.dev.sebo_virtual.DTO.response.BookResponseDTO;
 import com.fabpont.dev.sebo_virtual.entities.Book;
+import com.fabpont.dev.sebo_virtual.exceptions.ResourceNotFoundException;
 import com.fabpont.dev.sebo_virtual.services.BookService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +21,12 @@ public class BookController {
         this.bookService = bookService;
     }
     @PostMapping
-    public BookCreateDTO createBook(@Valid @RequestBody BookCreateDTO bookCreateDTO){
-        return bookService.addBook(bookCreateDTO);
+    public BookResponseDTO createBook(@Valid @RequestBody BookRequestDTO bookRequestDTO){
+        return bookService.addBook(bookRequestDTO);
     }
 
     @DeleteMapping("/books/{id}")
-    public void deleteBook(@Valid @PathVariable Long id) {
+    public void deleteBook(@Valid @PathVariable Long id) throws ResourceNotFoundException {
          bookService.deleteBook(id);
     }
 

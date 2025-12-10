@@ -1,4 +1,4 @@
-package com.fabpont.dev.sebo_virtual.DTO;
+package com.fabpont.dev.sebo_virtual.DTO.response;
 
 import com.fabpont.dev.sebo_virtual.Enum.AdStatus;
 import com.fabpont.dev.sebo_virtual.Enum.BookConditionStatus;
@@ -14,6 +14,7 @@ public record AdResponseDTO(
             Long bookId,
             String bookTitle,
             BigDecimal price,
+            String publisher,
             BookConditionStatus bookCondition,
             AdStatus status,
             LocalDateTime createdAt
@@ -26,6 +27,7 @@ public record AdResponseDTO(
                     ad.getBook().getId(),
                     ad.getBook().getTitle(),
                     ad.getPrice(),
+                    ad.getBook().getPublisher(),
                     ad.getBookCondition(),
                     ad.getAdStatus(),
                     ad.getAdDate()

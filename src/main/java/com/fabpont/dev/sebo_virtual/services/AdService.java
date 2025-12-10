@@ -1,7 +1,7 @@
 package com.fabpont.dev.sebo_virtual.services;
 
-import com.fabpont.dev.sebo_virtual.DTO.AdCreateDTO;
-import com.fabpont.dev.sebo_virtual.DTO.AdResponseDTO;
+import com.fabpont.dev.sebo_virtual.DTO.request.AdRequestDTO;
+import com.fabpont.dev.sebo_virtual.DTO.response.AdResponseDTO;
 import com.fabpont.dev.sebo_virtual.Enum.AdStatus;
 import com.fabpont.dev.sebo_virtual.entities.Ad;
 import com.fabpont.dev.sebo_virtual.entities.Book;
@@ -26,7 +26,7 @@ public class AdService {
     private final BookRepository bookRepository;
 
     @Transactional
-    public AdCreateDTO createAd(AdCreateDTO adcreateDTO) throws ResourceNotFoundException {
+    public AdResponseDTO createAd(AdRequestDTO adcreateDTO) throws ResourceNotFoundException {
         User user = userRepository.findById(adcreateDTO.getUseId())
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Usuário não encontrado com o ID: " + adcreateDTO.getUseId()));
@@ -45,7 +45,7 @@ public class AdService {
 
         Ad savedAd = adRepository.save(ad);
 
-        return AdResponseDTO.fromEntity(adRepository.save(ad)); //Retorna AdResponseDTO, não AdCreateDTO
+        return AdResponseDTO.fromEntity(savedAd); //Retorna AdResponseDTO, não AdCreateDTO
 
 
     }
