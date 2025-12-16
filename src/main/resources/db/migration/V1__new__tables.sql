@@ -22,7 +22,6 @@ CREATE TABLE ad (
     user_id BIGINT NOT NULL,
     price DECIMAL(10,2) NOT NULL,
     book_condition VARCHAR(20) NOT NULL,
-    publisher VARCHAR(30) NOT NULL,
     ad_date DATE NOT NULL,
     ad_status VARCHAR(20) NOT NULL,
 
