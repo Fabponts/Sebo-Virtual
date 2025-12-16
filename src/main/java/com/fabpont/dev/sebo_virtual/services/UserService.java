@@ -18,11 +18,11 @@ public class UserService {
 
     public User saveUser(UserRegisterDTO userRegisterDTO) {
         User user = new User();
-        user.setName(userRegisterDTO.getName());
-        user.setEmail(userRegisterDTO.getEmail());
-        user.setPassword(userRegisterDTO.getPassword());
-        user.setPhoneNumber(userRegisterDTO.getPhoneNumber());
-        user.setAddress(userRegisterDTO.getAddress());
+        user.setName(userRegisterDTO.name());
+        user.setEmail(userRegisterDTO.email());
+        user.setPassword(userRegisterDTO.password());
+        user.setPhoneNumber(userRegisterDTO.phoneNumber());
+        user.setAddress(userRegisterDTO.address());
         return userRepository.save(user);
     }
 
@@ -49,11 +49,11 @@ public class UserService {
     public User updateUser(Long user_id, UserRegisterDTO userRegisterDTO) {
         if (userRepository.existsById(user_id)) {
             User user = findUserById(user_id).get();
-            user.setName(userRegisterDTO.getName());
-            user.setEmail(userRegisterDTO.getEmail());
-            user.setPassword(userRegisterDTO.getPassword());
-            user.setPhoneNumber(userRegisterDTO.getPhoneNumber());
-            user.setAddress(userRegisterDTO.getAddress());
+            user.setName(userRegisterDTO.name());
+            user.setEmail(userRegisterDTO.email());
+            user.setPassword(userRegisterDTO.password());
+            user.setPhoneNumber(userRegisterDTO.phoneNumber());
+            user.setAddress(userRegisterDTO.address());
             return userRepository.save(user);
         }else {
             throw new RuntimeException("Id user not found: " + user_id);
