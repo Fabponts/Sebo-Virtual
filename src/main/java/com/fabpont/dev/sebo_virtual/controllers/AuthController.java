@@ -7,6 +7,7 @@ import com.fabpont.dev.sebo_virtual.repositories.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final UserRepository userRepository;
-    public AuthController(UserRepository userRepository) {
+    private final PasswordEncoder passwordEncoder;
+
+
+    public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping("/login")
@@ -29,7 +34,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<UserRegisterDTO> register(@Valid @RequestBody UserRegisterDTO userRegisterDTO) {
         User user = new User();
-        user.setPassword(userRegisterDTO.password());
+        user.setPassword(passwordEncoder.encode(userRegisterDTO.password()));
         user.setEmail(userRegisterDTO.email());
         user.setName(userRegisterDTO.name());
         user.setPhoneNumber(userRegisterDTO.phoneNumber());
