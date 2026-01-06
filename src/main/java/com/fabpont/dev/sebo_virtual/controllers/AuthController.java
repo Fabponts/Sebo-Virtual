@@ -1,7 +1,9 @@
 package com.fabpont.dev.sebo_virtual.controllers;
 
+import com.fabpont.dev.sebo_virtual.DTO.AuthResponseDTO;
 import com.fabpont.dev.sebo_virtual.DTO.UserLoginDTO;
 import com.fabpont.dev.sebo_virtual.DTO.UserRegisterDTO;
+import com.fabpont.dev.sebo_virtual.config.TokenConfig;
 import com.fabpont.dev.sebo_virtual.entities.User;
 import com.fabpont.dev.sebo_virtual.repositories.UserRepository;
 import jakarta.validation.Valid;
@@ -23,20 +25,25 @@ public class AuthController {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final TokenConfig tokenConfig;
 
-    public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder,  AuthenticationManager authenticationManager) {
+    public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder,  AuthenticationManager authenticationManager , TokenConfig tokenConfig) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
+        this.tokenConfig = tokenConfig;
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserLoginDTO> login(@Valid @RequestBody UserLoginDTO userLoginDTO) {
+    public ResponseEntity<AuthResponseDTO> login(@Valid @RequestBody UserLoginDTO userLoginDTO) {
 
         UsernamePasswordAuthenticationToken userAndPass = new UsernamePasswordAuthenticationToken(userLoginDTO.email(), userLoginDTO.password());
         Authentication authentication = authenticationManager.authenticate(userAndPass);
 
-        return null;
+        User user = (User) authentication.getPrincipal();
+        String token = tokenConfig.generateToken(user);
+
+        return ResponseEntity.ok(new AuthResponseDTO(token));
     }
 
     @PostMapping("/register")
